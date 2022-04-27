@@ -1,0 +1,9 @@
+<div style="margin-top: 20px" class="well">
+    <p>Du {{ start }} au {{ end }} </p>
+    {{#msg}}
+        <p><strong> {{ msg }} </strong></p>
+    {{/msg}}
+    {{#available}}
+        <a href="{{ url }}" class="btn btn-dark" role="button" aria-pressed="true" target="_blank">Se connecter</a>
+    {{/available}}
+</div>
