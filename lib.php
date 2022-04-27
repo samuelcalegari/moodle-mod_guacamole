@@ -78,7 +78,6 @@ function guacamole_update_instance($guacamole) {
 
     $guacamole->timemodified = time();
     $guacamole->id = $guacamole->instance;
-    $OUTPUT->notification('jjj');
     return $DB->update_record('guacamole', $guacamole);
 }
 
