@@ -5,7 +5,7 @@
 1.0
 
 ## Features ##
-- Declare virtual class, provided by Apache Guacamole in Moodle
+- Add virtual classroom, provided by Apache Guacamole in Moodle
 
 ## Supported languages ##
 - english, french

@@ -88,13 +88,13 @@ class mod_guacamole_mod_form extends moodleform_mod {
         $errors = parent::validation($data, $files);
 
         if($data['timeopen'] > $data['timeclose'])
-            $errors['timeopen'] = "Le début doit être antérieur à la fin";
+            $errors['timeopen'] = get_string('err1', 'mod_guacamole');
 
         if($data['timeclose'] - $data['timeopen'] > (4 * 60 * 60))
-            $errors['timeclose'] = "La session ne peut excéder 4 heures";
+            $errors['timeclose'] = get_string('err2', 'mod_guacamole');
 
         if(!isFree($data['timeopen'], $data['timeclose']))
-            $errors['timeopen'] = "La classe virtuelle est déjà réservée pour cette période";
+            $errors['timeopen'] = get_string('err3', 'mod_guacamole');
 
         return $errors;
     }

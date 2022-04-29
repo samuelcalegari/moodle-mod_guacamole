@@ -26,16 +26,21 @@ defined('MOODLE_INTERNAL') || die();
 
 $string['modulename'] = 'Guacamole';
 $string['modulenameplural'] = 'Guacamole';
-
 $string['guacamole'] = 'Guacamole';
 $string['guacamole:addinstance'] = 'Add a new Guacamole';
 $string['guacamole:view'] = 'View Guacamole';
 $string['pluginadministration'] = 'Guacamole Administration';
 $string['pluginname'] = 'Guacamole';
-
 $string['name'] = 'Name';
 $string['name_help'] = 'Name';
 $string['url'] = 'Guacamole Url';
 $string['configurl'] = 'Direct link to Guacamole platform';
 $string['open'] = 'Start at';
 $string['close'] = 'Close at';
+$string['classroomclosed'] = 'Classroom is now closed';
+$string['classroomnotopen'] = 'Classroom is not open at the moment';
+$string['info'] = 'Information';
+$string['connect'] = 'Log in';
+$string['err1'] = 'Start must be before end';
+$string['err2'] = 'The session cannot exceed 4 hours';
+$string['err3'] = 'The virtual classroom is already booked for this period';

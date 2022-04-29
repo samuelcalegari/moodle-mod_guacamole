@@ -81,12 +81,12 @@ class guacamole implements renderable, templatable {
         $msg = "";
         $available = true;
         if ($this->timeopen > $now) {
-            $msg = "La classe n'est pas ouverte pour le moment";
+            $msg = get_string('classroomnotopen', 'mod_guacamole');
             $available = false;
         }
 
         if($this->timeclose < $now) {
-            $msg = "La classe est désormais fermée";
+            $msg = get_string('classroomclosed', 'mod_guacamole');
             $available = false;
         }
 
@@ -95,6 +95,7 @@ class guacamole implements renderable, templatable {
         $data['end'] = strftime('%A %e %B %Y à %R', $this->timeclose);
         $data['msg'] = $msg;
         $data['available'] = $available;
+        $data['img_visu_src'] = $output->image_url('virtual-classroom', 'mod_guacamole');
         return $data;
     }
 }
