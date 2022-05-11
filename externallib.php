@@ -24,9 +24,11 @@
 
 require_once($CFG->libdir . "/externallib.php");
 
-class mod_guacamole_users_cnx extends external_api {
+class mod_guacamole_users_cnx extends external_api
+{
 
-    public static function get_users_cnx_parameters() {
+    public static function get_users_cnx_parameters()
+    {
         return new external_function_parameters(array());
     }
 
@@ -41,21 +43,23 @@ class mod_guacamole_users_cnx extends external_api {
             throw new moodle_exception('cannotviewprofile');
         }
 
-        // Search active guacamole
-        $data = array();
+        $tmp = array('cnx' => array(), 'oldcnx' => array());
         $now = time();
-        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE timeopen <= $now AND timeclose >= $now");
+        $lastminute = $now - 60;
+
+        // Search active guacamole
+        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE timeopen <= $now AND timeopen >= $lastminute");
 
         foreach ($records as $record) {
             $timeopen = $record->timeopen;
-            $timeclose= $record->timeclose;
+            $timeclose = $record->timeclose;
 
             // Search enrolled users in course
             $context = context_course::instance($record->course);
             $users = get_enrolled_users($context, 'moodle/course:isincompletionreports');
 
-            foreach($users as $user) {
-                array_push($data, array(
+            foreach ($users as $user) {
+                array_push($tmp['cnx'], array(
                     'user' => $user->username,
                     'timeopen' => $timeopen,
                     'timeclose' => $timeclose,
@@ -63,21 +67,40 @@ class mod_guacamole_users_cnx extends external_api {
             }
         }
 
+        // Search old guacamole
+        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE timeclose >= $lastminute AND timeclose <= $now");
 
-        $tmp = array();
-        $tmp['cnx'] = $data;
+        foreach ($records as $record) {
+            $timeopen = $record->timeopen;
+            $timeclose = $record->timeclose;
+
+            // Search enrolled users in course
+            $context = context_course::instance($record->course);
+            $users = get_enrolled_users($context, 'moodle/course:isincompletionreports');
+
+            foreach ($users as $user) {
+                array_push($tmp['oldcnx'], array(
+                    'user' => $user->username,
+                    'timeopen' => $timeopen,
+                    'timeclose' => $timeclose,
+                ));
+            }
+        }
 
         return $tmp;
     }
 
-    public static function get_users_cnx_returns() {
+    public static function get_users_cnx_returns()
+    {
 
         return new external_single_structure(array(
-            'cnx' => new external_multiple_structure(self::cnx_structure())
+            'cnx' => new external_multiple_structure(self::cnx_structure()),
+            'oldcnx' => new external_multiple_structure(self::cnx_structure())
         ));
     }
 
-    public static function cnx_structure() {
+    public static function cnx_structure()
+    {
 
         return new external_single_structure(
             array(
