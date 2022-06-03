@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $end
  * @return boolean exist /not exist
  */
-function isFree($start, $end) {
+function isFree($start, $end, $id) {
    global $DB;
 
     $query= 'SELECT * FROM {guacamole} WHERE 
@@ -39,5 +39,34 @@ function isFree($start, $end) {
                                 (timeopen < ' . $end. ' and timeclose >= '. $end .') OR 
                                 (timeopen >= ' .$start .' and timeclose <= ' . $end . ')';
     //echo($query);
-    return !$DB->record_exists_sql($query);
+    $records = $DB->get_records_sql($query);
+    foreach($records as $record) {
+        if($record->id != $id) return false;
+    }
+    return true;
+}
+
+/**
+ * Test if pause time
+ *
+ * @param int $start
+ * @param int $end
+ * @param int $pausetime
+ * @return boolean exist /not exist
+ */
+function isPauseTimeRespected($start, $end, $id, $pausetime = 0) {
+
+    if($pausetime == 0) return true;
+
+    global $DB;
+
+    $query= 'SELECT * FROM {guacamole} WHERE 
+                                (timeclose >= ' . $start. ' and timeclose < '. ($start + $pausetime) .') OR 
+                                (timeopen >= ' . $end. ' and timeopen < '. ($end + $pausetime) .')';
+    //echo($query);
+    $records = $DB->get_records_sql($query);
+    foreach($records as $record) {
+        if($record->id != $id) return false;
+    }
+    return true;
 }

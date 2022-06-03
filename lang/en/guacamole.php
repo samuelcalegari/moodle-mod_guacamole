@@ -44,3 +44,4 @@ $string['connect'] = 'Log in';
 $string['err1'] = 'Start must be before end';
 $string['err2'] = 'The session cannot exceed 4 hours';
 $string['err3'] = 'The virtual classroom is already booked for this period';
+$string['err4'] = 'A free time of 15 minutes must be respected between two virtual classroom';

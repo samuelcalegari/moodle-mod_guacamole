@@ -93,8 +93,11 @@ class mod_guacamole_mod_form extends moodleform_mod {
         if($data['timeclose'] - $data['timeopen'] > (4 * 60 * 60))
             $errors['timeclose'] = get_string('err2', 'mod_guacamole');
 
-        if(!isFree($data['timeopen'], $data['timeclose']))
+        if(!isFree($data['timeopen'], $data['timeclose'], $data["instance"]))
             $errors['timeopen'] = get_string('err3', 'mod_guacamole');
+
+        if(!isPauseTimeRespected($data['timeopen'], $data['timeclose'], $data["instance"], 15*60))
+            $errors['timeopen'] = get_string('err4', 'mod_guacamole');
 
         return $errors;
     }

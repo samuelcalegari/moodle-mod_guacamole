@@ -60,8 +60,9 @@ function guacamole_add_instance($guacamole) {
     global $DB;
 
     $guacamole->timecreated = time();
+    $guacamole->id = $DB->insert_record('guacamole', $guacamole);
 
-    return $DB->insert_record('guacamole', $guacamole);
+    return $guacamole->id;
 }
 
 /**

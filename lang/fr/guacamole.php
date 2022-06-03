@@ -44,3 +44,4 @@ $string['connect'] = 'Se connecter';
 $string['err1'] = 'Le début doit être antérieur à la fin';
 $string['err2'] = 'La session ne peut excéder 4 heures';
 $string['err3'] = 'La classe virtuelle est déjà réservée pour cette période';
+$string['err4'] = 'Un temps libre de 15 minutes doit être respecté entre deux classes virtuelles';
