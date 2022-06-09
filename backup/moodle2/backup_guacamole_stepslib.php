@@ -31,7 +31,7 @@ defined('MOODLE_INTERNAL') || die;
  * @copyright 2022 Samuel Calegari <samuel.calegari@univ-perp.fr>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class backup_guacamoles_activity_structure_step extends backup_activity_structure_step {
+class backup_guacamole_activity_structure_step extends backup_activity_structure_step {
 
     /**
      * Defines the backup structure of the module
