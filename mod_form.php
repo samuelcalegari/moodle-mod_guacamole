@@ -61,6 +61,10 @@ class mod_guacamole_mod_form extends moodleform_mod {
         $mform->addElement('header', 'availability', get_string('availability', 'assign'));
         $mform->setExpanded('availability', true);
 
+        $name = get_string('alwaysopen', 'guacamole');
+        $mform->addElement('advcheckbox', 'alwaysopen', $name);
+        $mform->addHelpButton('alwaysopen', 'alwaysopen', 'guacamole');
+
         $name = get_string('open', 'guacamole');
         $options = array('optional' => false);
         $mform->addElement('date_time_selector', 'timeopen', $name, $options);
@@ -87,17 +91,21 @@ class mod_guacamole_mod_form extends moodleform_mod {
 
         $errors = parent::validation($data, $files);
 
-        if($data['timeopen'] > $data['timeclose'])
-            $errors['timeopen'] = get_string('err1', 'mod_guacamole');
+        if ($data['alwaysopen']==0) {
 
-        if($data['timeclose'] - $data['timeopen'] > (get_config('guacamole', 'maxtime') * 60))
-            $errors['timeclose'] = get_string('err2', 'mod_guacamole').' : ' . get_config('guacamole', 'maxtime') .  ' mins';
+            if ($data['timeopen'] > $data['timeclose'])
+                $errors['timeopen'] = get_string('err1', 'mod_guacamole');
 
-        if(!isFree($data['timeopen'], $data['timeclose'], $data["instance"]))
-            $errors['timeopen'] = get_string('err3', 'mod_guacamole');
+            if ($data['timeclose'] - $data['timeopen'] > (get_config('guacamole', 'maxtime') * 60))
+                $errors['timeclose'] = get_string('err2', 'mod_guacamole') . ' : ' . get_config('guacamole', 'maxtime') . ' mins';
 
-        if(!isPauseTimeRespected($data['timeopen'], $data['timeclose'], $data["instance"], get_config('guacamole', 'pausetime')*60))
-            $errors['timeopen'] = get_string('err4', 'mod_guacamole').' : ' . get_config('guacamole', 'pausetime') .  ' mins';
+            if (!isFree($data['timeopen'], $data['timeclose'], $data["instance"]))
+                $errors['timeopen'] = get_string('err3', 'mod_guacamole');
+
+            if (!isPauseTimeRespected($data['timeopen'], $data['timeclose'], $data["instance"], get_config('guacamole', 'pausetime') * 60))
+                $errors['timeopen'] = get_string('err4', 'mod_guacamole') . ' : ' . get_config('guacamole', 'pausetime') . ' mins';
+
+        }
 
         return $errors;
     }

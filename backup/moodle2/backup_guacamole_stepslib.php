@@ -40,7 +40,7 @@ class backup_guacamole_activity_structure_step extends backup_activity_structure
      */
     protected function define_structure() {
 
-        $guacamole = new backup_nested_element('guacamole', array('id'), array('name', 'timecreated', 'timemodified', 'timeopen', 'timeclose'));
+        $guacamole = new backup_nested_element('guacamole', array('id'), array('name', 'timecreated', 'timemodified', 'alwaysopen', 'timeopen', 'timeclose'));
         $guacamole->set_source_table('guacamole', array('id' => backup::VAR_ACTIVITYID));
         return $this->prepare_activity_structure($guacamole);
 

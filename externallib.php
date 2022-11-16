@@ -48,7 +48,7 @@ class mod_guacamole_users_cnx extends external_api
         $lastminute = $now - 60;
 
         // Search active guacamole
-        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE timeopen <= $now AND timeopen >= $lastminute");
+        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE alwaysopen = 0 AND timeopen <= $now AND timeopen >= $lastminute");
 
         foreach ($records as $record) {
             $timeopen = $record->timeopen;
@@ -68,7 +68,7 @@ class mod_guacamole_users_cnx extends external_api
         }
 
         // Search old guacamole
-        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE timeclose >= $lastminute AND timeclose <= $now");
+        $records = $DB->get_records_sql("SELECT * FROM {guacamole} WHERE alwaysopen = 0 AND timeclose >= $lastminute AND timeclose <= $now");
 
         foreach ($records as $record) {
             $timeopen = $record->timeopen;

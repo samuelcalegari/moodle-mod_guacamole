@@ -35,9 +35,11 @@ function isFree($start, $end, $id) {
    global $DB;
 
     $query= 'SELECT * FROM {guacamole} WHERE 
+                              alwaysopen = 0 AND (
                                 (timeopen <= ' . $start. ' and timeclose > '. $start .') OR 
                                 (timeopen < ' . $end. ' and timeclose >= '. $end .') OR 
-                                (timeopen >= ' .$start .' and timeclose <= ' . $end . ')';
+                                (timeopen >= ' .$start .' and timeclose <= ' . $end . ')
+                              )';
     //echo($query);
     $records = $DB->get_records_sql($query);
     foreach($records as $record) {
@@ -61,8 +63,10 @@ function isPauseTimeRespected($start, $end, $id, $pausetime = 0) {
     global $DB;
 
     $query= 'SELECT * FROM {guacamole} WHERE 
-                                (timeclose >= ' . $start. ' and timeclose < '. ($start + $pausetime) .') OR 
-                                (timeopen >= ' . $end. ' and timeopen < '. ($end + $pausetime) .')';
+                                 alwaysopen = 0 AND (
+                                    (timeclose >= ' . $start. ' and timeclose < '. ($start + $pausetime) .') OR 
+                                    (timeopen >= ' . $end. ' and timeopen < '. ($end + $pausetime) .')
+                                 )';
     //echo($query);
     $records = $DB->get_records_sql($query);
     foreach($records as $record) {

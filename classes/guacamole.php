@@ -48,6 +48,11 @@ class guacamole implements renderable, templatable {
     private $course;
 
     /**
+     * @var int $alwaysopen
+     */
+    private $alwaysopen;
+
+    /**
      * @var int $timeopen
      */
     private $timeopen;
@@ -65,6 +70,7 @@ class guacamole implements renderable, templatable {
      */
     public function __construct(stdClass $guacamoleinstance) {
         $this->course = $guacamoleinstance->course;
+        $this->alwaysopen = $guacamoleinstance->alwaysopen;
         $this->timeopen = $guacamoleinstance->timeopen;
         $this->timeclose = $guacamoleinstance->timeclose;
     }
@@ -75,19 +81,23 @@ class guacamole implements renderable, templatable {
      * @param renderer_base $output The output renderer object.
      * @return stdClass
      */
-    public function export_for_template(renderer_base $output) {
+    public function export_for_template(renderer_base $output)
+    {
 
         $now = time();
         $msg = "";
         $available = true;
-        if ($this->timeopen > $now) {
-            $msg = get_string('classroomnotopen', 'mod_guacamole');
-            $available = false;
-        }
+        if (!$this->alwaysopen) {
 
-        if($this->timeclose < $now) {
-            $msg = get_string('classroomclosed', 'mod_guacamole');
-            $available = false;
+            if ($this->timeopen > $now) {
+                $msg = get_string('classroomnotopen', 'mod_guacamole');
+                $available = false;
+            }
+
+            if ($this->timeclose < $now) {
+                $msg = get_string('classroomclosed', 'mod_guacamole');
+                $available = false;
+            }
         }
 
         $data['url'] = get_config('guacamole', 'url');
@@ -95,6 +105,7 @@ class guacamole implements renderable, templatable {
         $data['end'] = strftime('%A %e %B %Y à %R', $this->timeclose);
         $data['msg'] = $msg;
         $data['available'] = $available;
+        $data['alwaysopen'] = $this->alwaysopen;
         $data['img_visu_src'] = $output->image_url('virtual-classroom', 'mod_guacamole');
         return $data;
     }
