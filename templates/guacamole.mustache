@@ -1,13 +1,13 @@
 <div class="card" style="width: 20rem;margin-top: 20px;">
     <img class="card-img-top" src="{{ img_visu_src }}" alt="Card image cap" {{^available}} style="filter: grayscale(1);" {{/available}}>
     <div class="card-body">
-        {{^alwayopen}}
+        {{^alwaysopen}}
             <h5 class="card-title">{{#str}} info, mod_guacamole {{/str}}</h5>
             <p>Du {{ start }} au {{ end }} </p>
             {{#msg}}
                 <p><strong> {{ msg }} </strong></p>
             {{/msg}}
-        {{/alwayopen}}
+        {{/alwaysopen}}
         {{#available}}
             <a href="{{ url }}" class="btn btn-dark" role="button" aria-pressed="true" target="_blank">{{#str}} connect, mod_guacamole {{/str}}</a>
         {{/available}}
