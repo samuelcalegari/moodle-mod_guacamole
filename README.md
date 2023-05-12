@@ -2,7 +2,7 @@
 
 ## Current version ##
 
-1.4
+1.5
 
 ## Features ##
 - Add virtual classroom, provided by Apache Guacamole in Moodle

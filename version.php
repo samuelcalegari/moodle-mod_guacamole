@@ -24,9 +24,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2022111500;            // The current module version (Date: YYYYMMDDXX)
+$plugin->version   = 2023051200;            // The current module version (Date: YYYYMMDDXX)
 $plugin->requires  = 2018050800;            // Requires this Moodle version
 $plugin->component = 'mod_guacamole';       // Full name of the plugin (used for diagnostics)
-$plugin->release = 'v1.4';
+$plugin->release = 'v1.5';
 $plugin->maturity = MATURITY_STABLE;
 $plugin->cron      = 0;

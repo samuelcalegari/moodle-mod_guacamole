@@ -61,7 +61,7 @@ class backup_guacamole_activity_task extends backup_activity_task {
 
         // Link to the list of newmodules.
         $search = '/('.$base.'\/mod\/guacamole\/index.php\?id\=)([0-9]+)/';
-        $content = preg_replace($search, '$@FOROC_TUTORSINDEX*$2@$', $content);
+        $content = preg_replace($search, '$@GUACAMOLEINDEX*$2@$', $content);
 
         // Link to guacamole view by moduleid.
         $search = '/('.$base.'\/mod\/guacamole\/view.php\?id\=)([0-9]+)/';
